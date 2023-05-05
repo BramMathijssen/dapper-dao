@@ -10,8 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@adobe/react-spectrum": "^3.26.0",
+    "connectkit": "^1.2.3",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-aria": "^3.24.0",
+    "react-aria-components": "^1.0.0-alpha.3",
+    "react-dom": "^18.2.0",
+    "sass": "^1.62.1",
+    "wagmi": "^0.12.12"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
