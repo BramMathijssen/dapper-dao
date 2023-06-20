@@ -11,6 +11,7 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import MyDao from "./components/dao/MyDao.js";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
@@ -44,7 +45,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 "--ck-accent-text-color": "#ffffff",
             }}
         >
-                <App />
+            {/* <App /> */}
+            <MyDao />
         </ConnectKitProvider>
     </WagmiConfig>
 );

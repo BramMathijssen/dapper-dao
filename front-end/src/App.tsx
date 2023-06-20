@@ -1,17 +1,63 @@
 import { useState } from "react";
 import "./App.css";
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/layout/Layout";
 import { Button } from "./components/ui/button";
+import { CONTRACTS, getContractAddressByChain } from "./lib/getContractAddressByChain";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./components/ui/form";
+import { Input } from "./components/ui/input";
 
 function App() {
     const [clicked, setClicked] = useState<boolean>(false);
 
     const buttonHandler = () => {
+        console.log(`click`);
         setClicked(true);
     };
 
+    const test = getContractAddressByChain(31337, CONTRACTS.DAO_CONTRACT);
+    console.log(test);
+
+    const formSchema = z.object({
+        username: z.string().min(2).max(50),
+    });
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            username: "",
+        },
+        mode: "all",
+    });
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        // Do something with the form values.
+        // ✅ This will be type-safe and validated.
+        console.log(values);
+    }
+
     return (
         <>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="shadcn" {...field} />
+                                </FormControl>
+                                <FormDescription>This is your public display name.</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Submit</Button>
+                </form>
+            </Form>
             <Layout>
                 <Button onClick={buttonHandler}>Submit</Button>
                 <div className="container max-w-6xl mx-auto bg-slate-600">
