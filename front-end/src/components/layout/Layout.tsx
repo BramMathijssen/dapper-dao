@@ -3,10 +3,10 @@ import Navigation from "./Navigation";
 
 const Layout = (props: any) => {
     return (
-        <div>
+        <div className="flex flex-col h-screen">
             <Navigation />
-            <main>
-                <div className="mx-auto max-w-7xl bg-slate-500">{props.children}</div>
+            <main className="bg-myPrimary-400 grow p-12">
+                <div className="mx-auto max-w-7xl h-full">{props.children}</div>
             </main>
         </div>
     );

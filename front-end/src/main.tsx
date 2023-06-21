@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
+import { goerli, hardhat, polygonMumbai } from "@wagmi/core/chains";
 import { ConnectKitProvider } from "connectkit";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -12,12 +13,13 @@ import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import MyDao from "./components/dao/MyDao.js";
+import CreateProposal from "./components/dao/CreateProposal.js";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-const { chains, publicClient, webSocketPublicClient } = configureChains([mainnet], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
+const { chains, publicClient, webSocketPublicClient } = configureChains([hardhat, mainnet], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
 
 // Set up wagmi config
 const config = createConfig({

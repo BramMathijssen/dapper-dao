@@ -15,7 +15,28 @@ export default {
                 sans: ["Inter", "sans-serif"],
                 poppins: ["Poppins", "sans-serif"],
             },
+            backgroundImage : {
+                'grain-image' : "url('./assets/images/grain.jpg')"
+            },
             colors: {
+                accent2: "#ECF323",
+                myPrimary: {
+                    400: "#131519",
+                    200: "#26282C"
+                },
+                customSlate:{
+                    50: "#f5f7f8",
+                    100: "#e0e3e7",
+                    200: "#c0c8cf",
+                    300: "#99a3af",
+                    400: "#737e8e",
+                    500: "#596473",
+                    600: "#464f5b",
+                    700: "#3a404b",
+                    800: "#3a404b",
+                    900: "#2c2f35",
+                    950: "#131519",
+                },
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
