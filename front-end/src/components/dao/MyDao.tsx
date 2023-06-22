@@ -5,7 +5,7 @@ import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAdd
 import { daoContractAbi } from "./../../constants";
 import { Button } from "../ui/button";
 import { hexToString, stringToHex } from "viem";
-import {  motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Input } from "../ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +14,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
+import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
+import { formatTimestamp } from "../../lib/formatTimestamp";
 
 const MyDao = () => {
     const { chain } = useNetwork();
@@ -26,7 +28,10 @@ const MyDao = () => {
             name: data[2][index],
             memberSince: data[3][index],
         }));
-        return transformedArray;
+
+        // sorts array so latest added array is first
+        const sortedArray = transformedArray.sort((a: any, b: any) => Number(b.memberSince) - Number(a.memberSince));
+        return sortedArray;
     };
 
     const {
@@ -115,7 +120,7 @@ const MyDao = () => {
                                 <p>HEY</p>
                             </motion.div>
                         </motion.div> */}
-                <motion.div onClick={() => setClicked(true)} layout className={`${clicked ? "flex-[1]" : "flex-[0.4]"} bg-accent2 rounded-lg p-9`}>
+                <motion.div onClick={() => setClicked(true)} layout className={`${clicked ? "flex-[0.6]" : "flex-[0.35]"} bg-accent2 rounded-lg p-9`}>
                     <motion.div layout="position">
                         <h2 className=" text-xl font-medium text-slate-900 mb-7">Create a Member</h2>
                         <Form {...form}>
@@ -185,14 +190,24 @@ const MyDao = () => {
                 </motion.div>
                 <motion.div onClick={() => setClicked(false)} layout className={`rounded-lg flex-1 bg-[url('./assets/images/grain.jpg')] bg-cover`}>
                     <div className="w-full h-full bg-myPrimary-200/90 rounded-lg p-9">
-                        <motion.div layout="position">
-                            <h2 className=" text-xl font-medium text-slate-50 mb-5">Registered Members</h2>
+                        <motion.div>
+                            <motion.h2 layout="position" className=" text-xl font-medium text-slate-50 mb-5">
+                                Registered Members
+                            </motion.h2>
                             <Separator className="bg-customSlate-700 mb-6" />
 
                             {memberData.map((member) => (
-                                <motion.div layout className="w-full h-24 rounded-lg border border-customSlate-300">
-                                    <p>{member.address}</p>
-                                    <p>{hexToString(member.name)}</p>
+                                <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
+                                    <motion.div layout="position">
+                                        <div className="">
+                                            <Jazzicon diameter={20} seed={jsNumberForAddress(member.address)} />
+                                        </div>
+                                        <div className="">
+                                            <motion.p className="text-xl font-bold text-customSlate-50">{hexToString(member.name)}</motion.p>
+                                            <motion.p className=" text-sm text-customSlate-200">{member.address}</motion.p>
+                                            <p>{formatTimestamp(member.memberSince)}</p>
+                                        </div>
+                                    </motion.div>
                                 </motion.div>
                             ))}
                         </motion.div>

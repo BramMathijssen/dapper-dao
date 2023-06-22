@@ -14,6 +14,7 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import MyDao from "./components/dao/MyDao.js";
 import CreateProposal from "./components/dao/CreateProposal.js";
+import { BrowserRouter } from "react-router-dom";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
@@ -47,8 +48,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 "--ck-accent-text-color": "#ffffff",
             }}
         >
-            {/* <App /> */}
-            <MyDao />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </ConnectKitProvider>
     </WagmiConfig>
 );
