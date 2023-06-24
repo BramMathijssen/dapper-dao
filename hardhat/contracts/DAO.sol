@@ -47,6 +47,8 @@ contract DAO {
 
     struct Proposal {
         uint256 id;
+        string title;
+        address creator;
         bool valid;
         bool active;
         string description;
@@ -127,6 +129,7 @@ contract DAO {
 
     function createProposal(
         string memory _description,
+        string memory _title,
         Duration _duration
     ) external hasRole(USER) {
         require(bytes(_description).length > 10, "need atleast 10 characters");
@@ -134,6 +137,8 @@ contract DAO {
         uint256 proposalId = _proposalIds.current();
         proposals[proposalId] = Proposal({
             id: proposalId,
+            title: _title,
+            creator: msg.sender,
             valid: true,
             description: _description,
             startDate: uint32(block.timestamp),
