@@ -1,13 +1,17 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
+import { Activity, CreditCard, DollarSign, Users, ArrowUp, ArrowDown } from "lucide-react";
 import Layout from "../layout/Layout";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "../ui/select";
 import { Input } from "../ui/input";
 import { Address, useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAddressByChain";
 import { daoContractAbi } from "./../../constants";
 import { motion } from "framer-motion";
+import { Progress } from "../ui/progress";
+import arrowUp from "./../../assets/arrow-up.svg";
+import arrowDown from "./../../assets/arrow-down.svg";
+import { Badge } from "../ui/badge";
 
 const MyDashboard = () => {
     const { chain } = useNetwork();
@@ -99,13 +103,50 @@ const MyDashboard = () => {
                             <CardDescription>Cast your vote on the latest proposals</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {proposalData
+                            {/* {proposalData
                                 ? proposalData.map((proposal) => (
                                       <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
                                           <p>{proposal.description}</p>
                                       </motion.div>
                                   ))
-                                : null}
+                                : null} */}
+                            <div className="w-full p-4">
+                                <div className="flex items-center gap-4">
+                                    <h3 className="text-lg font-medium">I want to propose we increase our member count</h3>
+                                    <Badge variant="secondary" className="py-0 h-5 text-[10px]">
+                                        ACTIVE
+                                    </Badge>
+                                </div>
+                                <p className="text-xs text-customSlate-400">CREATED BY 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 • 18 October 02:23</p>
+                                <div className="my-5">
+                                    <p className="text-sm">It’s been a while since Luke made the above call to the community to try and establish a shared vision for 1Hive going forward. There wasn’t a great deal of response to his call and since then the value of Honey has continued to diminish and contributors have continued to leaveor become inactive.</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-customSlate-400 mb-2">CURRENT SUPPORT</p>
+                                    <Progress className="bg-customSlate-600 h-3" value={33} />
+                                    <div className="flex mt-3 justify-between">
+                                        <div className="flex gap-4 items-center">
+                                            <div className="flex items-center text-sm">
+                                                <ArrowUp className="h-6 w-6 text-customSlate-400" />
+                                                <p>5</p>
+                                                <ArrowDown className="h-6 w-6 text-customSlate-400" />
+                                                <p>12</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-customSlate-400">
+                                                    Votes <span className="text-white text-sm"> 17</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-customSlate-400 text-sm">
+                                                Time Remaining <span className="text-white">1D | 2H | 23M</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <SelectSeparator className="mt-5 bg-customSlate-500"/>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>
