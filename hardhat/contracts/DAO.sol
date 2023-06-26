@@ -38,6 +38,7 @@ contract DAO {
     /* Structs */
     struct Member {
         // uint256 id;
+        address memberAddress;
         bool valid; // checks if member has been initialised in mapping
         bytes32 name;
         uint256 memberSince;
@@ -46,12 +47,17 @@ contract DAO {
 
     struct Proposal {
         uint256 id;
+        string title;
+        address creator;
         bool valid;
         bool active;
         string description;
         uint32 startDate;
         uint32 endDate;
+        uint32 upVotes;
+        uint32 downVotes;
         int32 voteCount;
+        address[] voters;
     }
 
     /* Events */
@@ -111,12 +117,13 @@ contract DAO {
         require(members[_address].valid == false, "member already exists");
 
         Member storage member = members[_address];
+        member.memberAddress = _address;
         member.valid = true;
         member.name = _name;
         member.memberSince = block.timestamp;
         member.role[_getRole(_role)] = true;
 
-        _membersList.push(_address); 
+        _membersList.push(_address);
 
         emit MemberAdded(_address, _name, _role);
     }
@@ -125,6 +132,7 @@ contract DAO {
 
     function createProposal(
         string memory _description,
+        string memory _title,
         Duration _duration
     ) external hasRole(USER) {
         require(bytes(_description).length > 10, "need atleast 10 characters");
@@ -132,17 +140,39 @@ contract DAO {
         uint256 proposalId = _proposalIds.current();
         proposals[proposalId] = Proposal({
             id: proposalId,
+            title: _title,
+            creator: msg.sender,
             valid: true,
             description: _description,
             startDate: uint32(block.timestamp),
             endDate: uint32(_getTimestampByDuration(_duration)),
             active: true,
-            voteCount: 0
+            voteCount: 0,
+            upVotes: 0,
+            downVotes: 0,
+            voters: new address[](0)
         });
         emit ProposalCreated(proposalId, _description, _duration);
     }
 
-    function vote(uint256 _proposalNumber, bool upVote) external hasRole(USER) {
+    // function vote(uint256 _proposalNumber, bool upVote) external hasRole(USER) {
+    //     Proposal storage proposal = proposals[_proposalNumber];
+    //     require(proposal.valid == true, "proposal not valid");
+    //     require(proposal.active == true, "proposal not active");
+    //     require(block.timestamp < proposal.endDate, "proposal ended");
+    //     require(
+    //         block.timestamp >= proposal.startDate,
+    //         "proposal hasn't started"
+    //     );
+    //     if (upVote) {
+    //         proposal.voteCount++;
+    //     } else {
+    //         proposals[_proposalNumber].voteCount--;
+    //     }
+    //     emit Voted(_proposalNumber, upVote, msg.sender);
+    // }
+
+    function vote(uint256 _proposalNumber, bool _vote) external hasRole(USER) {
         Proposal storage proposal = proposals[_proposalNumber];
         require(proposal.valid == true, "proposal not valid");
         require(proposal.active == true, "proposal not active");
@@ -151,12 +181,15 @@ contract DAO {
             block.timestamp >= proposal.startDate,
             "proposal hasn't started"
         );
-        if (upVote) {
-            proposal.voteCount++;
+        require(_checkVoted(_proposalNumber, msg.sender) == false, "already voted");
+        if (_vote) {
+            proposal.upVotes++;
         } else {
-            proposals[_proposalNumber].voteCount--;
+            proposal.downVotes++;
         }
-        emit Voted(_proposalNumber, upVote, msg.sender);
+        proposal.voters.push(msg.sender);
+        proposal.voteCount++;
+        emit Voted(_proposalNumber, _vote, msg.sender);
     }
 
     function getAllProposals() external view returns (Proposal[] memory) {
@@ -171,8 +204,52 @@ contract DAO {
         return proposalsList;
     }
 
-    function getMember(address _memberAddress) external view returns(bool, bytes32, uint256){ 
-        
+    function getMembersList() external view returns (address[] memory) {
+        return _membersList;
+    }
+
+    // getting members from member struct with individual properties
+    function getMembers()
+        external
+        view
+        returns (
+            address[] memory,
+            bool[] memory,
+            bytes32[] memory,
+            uint256[] memory
+        )
+    {
+        address[] memory addresses = new address[](_membersList.length);
+        bool[] memory valid = new bool[](_membersList.length);
+        bytes32[] memory names = new bytes32[](_membersList.length);
+        uint256[] memory memberSince = new uint256[](_membersList.length);
+
+        for (uint256 i = 0; i < _membersList.length; i++) {
+            address tempAddress = _membersList[i];
+            addresses[i] = members[tempAddress].memberAddress;
+            valid[i] = members[tempAddress].valid;
+            names[i] = members[tempAddress].name;
+            memberSince[i] = members[tempAddress].memberSince;
+        }
+        return (addresses, valid, names, memberSince);
+    }
+
+    // doesnt work
+    // function getMembersMapping() external returns (Member[] memory) {
+
+    // }
+
+    // gets a individual member
+    function getMember(
+        address _memberAddress
+    ) external view returns (address, bool, bytes32, uint256) {
+        Member storage member = members[_memberAddress];
+        return (
+            member.memberAddress,
+            member.valid,
+            member.name,
+            member.memberSince
+        );
     }
 
     /* public Functions */
@@ -209,5 +286,17 @@ contract DAO {
             return ADMIN;
         }
         return 0;
+    }
+
+    function _checkVoted(
+        uint _proposalNumber,
+        address _voterAddress
+    ) internal view returns (bool) {
+        Proposal memory proposal = proposals[_proposalNumber];
+        address[] memory voters = proposal.voters;
+        for (uint256 i = 0; i < voters.length; i++) {
+            if (voters[i] == _voterAddress) return true;
+        }
+        return false;
     }
 }
