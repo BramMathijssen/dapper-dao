@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
-import { formatTimestamp } from "../../lib/formatTimestamp";
+import { formatTimestamp, formatTimestamp2 } from "../../lib/formatTimestamp";
 import { Textarea } from "../ui/textarea";
 
 const MyProposals = () => {
@@ -23,7 +23,6 @@ const MyProposals = () => {
     const [clicked, setClicked] = useState<boolean>(false);
 
     const transform = (data: any) => {
-
         return data;
     };
 
@@ -72,6 +71,7 @@ const MyProposals = () => {
     const formSchema = z.object({
         description: z.string().min(2).max(50),
         duration: z.string().min(1).max(50),
+        title: z.string().min(1).max(50),
     });
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -79,6 +79,7 @@ const MyProposals = () => {
         defaultValues: {
             description: "",
             duration: "",
+            title: "",
         },
         mode: "all",
     });
@@ -87,7 +88,7 @@ const MyProposals = () => {
         // ✅ This will be type-safe and validated.
         console.log(values);
         write({
-            args: [values.description, values.duration],
+            args: [values.title, values.description, values.duration],
         });
     }
 
@@ -99,6 +100,19 @@ const MyProposals = () => {
                         <h2 className=" text-xl font-medium text-slate-900 mb-7">Create a Proposal</h2>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <FormField
+                                    control={form.control}
+                                    name="title"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-black">Title</FormLabel>
+                                            <FormControl>
+                                                <Input className="border-black text-black" placeholder="" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                                 <FormField
                                     control={form.control}
                                     name="description"
@@ -160,7 +174,17 @@ const MyProposals = () => {
 
                             {proposalData.map((proposal) => (
                                 <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
-                                    <p>{proposal.description}</p>
+                                                                          <div className="w-full">
+                                          <div className="flex items-center gap-4">
+                                              <h3 className="text-lg font-medium">{proposal.title}</h3>
+                                          </div>
+                                          <p className="text-xs text-customSlate-400">
+                                              CREATED BY {proposal.creator} • {formatTimestamp2(proposal.startDate)}
+                                          </p>
+                                          <div className="my-5">
+                                              <p className="text-sm">{proposal.description}</p>
+                                          </div>
+                                      </div>
                                 </motion.div>
                             ))}
                         </motion.div>
