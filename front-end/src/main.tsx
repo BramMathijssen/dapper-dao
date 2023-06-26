@@ -15,6 +15,8 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import MyDao from "./components/dao/MyDao.js";
 import CreateProposal from "./components/dao/CreateProposal.js";
 import { BrowserRouter } from "react-router-dom";
+import { Toast } from "./components/ui/toast.js";
+import { Toaster } from "./components/ui/toaster.js";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
@@ -50,6 +52,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         >
             <BrowserRouter>
                 <App />
+                <Toaster/>
             </BrowserRouter>
         </ConnectKitProvider>
     </WagmiConfig>
