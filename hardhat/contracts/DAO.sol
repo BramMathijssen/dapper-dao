@@ -54,7 +54,10 @@ contract DAO {
         string description;
         uint32 startDate;
         uint32 endDate;
+        uint32 upVotes;
+        uint32 downVotes;
         int32 voteCount;
+        address[] voters;
     }
 
     /* Events */
@@ -144,12 +147,32 @@ contract DAO {
             startDate: uint32(block.timestamp),
             endDate: uint32(_getTimestampByDuration(_duration)),
             active: true,
-            voteCount: 0
+            voteCount: 0,
+            upVotes: 0,
+            downVotes: 0,
+            voters: new address[](0)
         });
         emit ProposalCreated(proposalId, _description, _duration);
     }
 
-    function vote(uint256 _proposalNumber, bool upVote) external hasRole(USER) {
+    // function vote(uint256 _proposalNumber, bool upVote) external hasRole(USER) {
+    //     Proposal storage proposal = proposals[_proposalNumber];
+    //     require(proposal.valid == true, "proposal not valid");
+    //     require(proposal.active == true, "proposal not active");
+    //     require(block.timestamp < proposal.endDate, "proposal ended");
+    //     require(
+    //         block.timestamp >= proposal.startDate,
+    //         "proposal hasn't started"
+    //     );
+    //     if (upVote) {
+    //         proposal.voteCount++;
+    //     } else {
+    //         proposals[_proposalNumber].voteCount--;
+    //     }
+    //     emit Voted(_proposalNumber, upVote, msg.sender);
+    // }
+
+    function vote(uint256 _proposalNumber, bool _vote) external hasRole(USER) {
         Proposal storage proposal = proposals[_proposalNumber];
         require(proposal.valid == true, "proposal not valid");
         require(proposal.active == true, "proposal not active");
@@ -158,12 +181,15 @@ contract DAO {
             block.timestamp >= proposal.startDate,
             "proposal hasn't started"
         );
-        if (upVote) {
-            proposal.voteCount++;
+        require(_checkVoted(_proposalNumber, msg.sender) == false, "already voted");
+        if (_vote) {
+            proposal.upVotes++;
         } else {
-            proposals[_proposalNumber].voteCount--;
+            proposal.downVotes++;
         }
-        emit Voted(_proposalNumber, upVote, msg.sender);
+        proposal.voters.push(msg.sender);
+        proposal.voteCount++;
+        emit Voted(_proposalNumber, _vote, msg.sender);
     }
 
     function getAllProposals() external view returns (Proposal[] memory) {
@@ -260,5 +286,17 @@ contract DAO {
             return ADMIN;
         }
         return 0;
+    }
+
+    function _checkVoted(
+        uint _proposalNumber,
+        address _voterAddress
+    ) internal view returns (bool) {
+        Proposal memory proposal = proposals[_proposalNumber];
+        address[] memory voters = proposal.voters;
+        for (uint256 i = 0; i < voters.length; i++) {
+            if (voters[i] == _voterAddress) return true;
+        }
+        return false;
     }
 }
