@@ -25,7 +25,6 @@ const MyDashboard = () => {
     const [searchValue, setSearchValue] = useState("");
     const { toast } = useToast();
 
-    
     const { data: proposalData, refetch: retechProposals } = useContractRead({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
         abi: daoContractAbi,
@@ -91,7 +90,7 @@ const MyDashboard = () => {
                             <Activity className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">+{typedProposalData.length}</div>
+                            <div className="text-2xl font-bold">+{typedProposalData ? typedProposalData.length : 0}</div>
                             <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                         </CardContent>
                     </Card>
