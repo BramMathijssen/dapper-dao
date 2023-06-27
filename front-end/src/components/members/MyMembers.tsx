@@ -29,7 +29,7 @@ const MyMembers = () => {
             memberSince: data[3][index],
         }));
 
-        // sorts array so latest added array is first
+        /// sorts array so latest added array is first
         const sortedArray = transformedArray.sort((a: any, b: any) => Number(b.memberSince) - Number(a.memberSince));
         return sortedArray;
     };
