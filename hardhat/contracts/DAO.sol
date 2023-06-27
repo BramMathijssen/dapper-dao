@@ -131,8 +131,8 @@ contract DAO {
     // todo: remove member
 
     function createProposal(
-        string memory _description,
         string memory _title,
+        string memory _description,
         Duration _duration
     ) external hasRole(USER) {
         require(bytes(_description).length > 10, "need atleast 10 characters");
@@ -181,7 +181,10 @@ contract DAO {
             block.timestamp >= proposal.startDate,
             "proposal hasn't started"
         );
-        require(_checkVoted(_proposalNumber, msg.sender) == false, "already voted");
+        require(
+            _checkVoted(_proposalNumber, msg.sender) == false,
+            "already voted"
+        );
         if (_vote) {
             proposal.upVotes++;
         } else {

@@ -1,9 +1,12 @@
-import React from "react";
 import Navigation from "./Navigation";
 import { AlertTriangle } from "lucide-react";
 import { useAccount } from "wagmi";
 
-const Layout = (props: any) => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+const Layout = ({ children }: Props) => {
     const { isConnected } = useAccount();
     return (
         <>
@@ -16,7 +19,7 @@ const Layout = (props: any) => {
             <div className="flex flex-col h-screen bg-myPrimary-400 pl-12 pr-12">
                 <Navigation />
                 <main className="bg-myPrimary-400 grow">
-                    <div className="mx-auto max-w-7xl h-full">{props.children}</div>
+                    <div className="mx-auto max-w-7xl h-full">{children}</div>
                 </main>
             </div>
         </>

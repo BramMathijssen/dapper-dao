@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Layout from "../layout/Layout";
-import { Address, useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
+import { useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAddressByChain";
 import { daoContractAbi } from "./../../constants";
 import { Button } from "../ui/button";
-import { hexToString, stringToHex } from "viem";
 import { motion } from "framer-motion";
 import { Input } from "../ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./../ui/form";
+import { Form, FormControl,FormField, FormItem, FormLabel, FormMessage } from "./../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
-import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
-import { formatTimestamp, formatTimestamp2 } from "../../lib/formatTimestamp";
+import { formatTimestamp2 } from "../../lib/formatTimestamp";
 import { Textarea } from "../ui/textarea";
 
 const MyProposals = () => {
@@ -28,8 +26,6 @@ const MyProposals = () => {
 
     const {
         data: proposalData,
-        isError: error3,
-        isLoading: loading3,
         refetch: refetchMembers,
     } = useContractRead({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
@@ -60,7 +56,6 @@ const MyProposals = () => {
 
     const waitForTransaction = useWaitForTransaction({
         hash: addMemberData?.hash,
-
         onSuccess(data) {
             console.log(`successfully waited..`);
             console.log(data);
@@ -69,7 +64,7 @@ const MyProposals = () => {
     });
 
     const formSchema = z.object({
-        description: z.string().min(2).max(50),
+        description: z.string().min(2).max(200),
         duration: z.string().min(1).max(50),
         title: z.string().min(1).max(50),
     });
@@ -77,9 +72,9 @@ const MyProposals = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            title: "",
             description: "",
             duration: "",
-            title: "",
         },
         mode: "all",
     });

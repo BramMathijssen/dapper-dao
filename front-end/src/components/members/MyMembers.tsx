@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Layout from "../layout/Layout";
-import { Address, useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
+import { useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import { CONTRACTS, getContractAddressByChain } from "../../lib/getContractAddressByChain";
 import { daoContractAbi } from "../../constants";
 import { Button } from "../ui/button";
@@ -10,7 +10,7 @@ import { Input } from "../ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
@@ -36,8 +36,6 @@ const MyMembers = () => {
 
     const {
         data: memberData,
-        isError: error3,
-        isLoading: loading3,
         refetch: refetchMembers,
     } = useContractRead({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
@@ -49,7 +47,6 @@ const MyMembers = () => {
             console.log("Success", data);
         },
     });
-    console.log(getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT)?.toString());
 
     const {
         write,
@@ -68,19 +65,12 @@ const MyMembers = () => {
 
     const waitForTransaction = useWaitForTransaction({
         hash: addMemberData?.hash,
-
         onSuccess(data) {
             console.log(`successfully waited..`);
             console.log(data);
             refetchMembers();
         },
     });
-
-    const onFormSubmitHandler = (memberAddress: Address, memberName: string, memberRole: number) => {
-        write({
-            args: [memberAddress, stringToHex(memberName, { size: 32 }), memberRole],
-        });
-    };
 
     const formSchema = z.object({
         username: z.string().min(2).max(50),
@@ -109,17 +99,6 @@ const MyMembers = () => {
     return (
         <Layout>
             <div className="flex flex-row gap-2 h-full">
-                {/* <motion.div onClick={() => setClicked(false)} layout className="flex-1 border-white border rounded p-2">
-                            <motion.div layout>
-                                <Label>Hey</Label>
-                                <Input />
-                            </motion.div>
-                        </motion.div>
-                        <motion.div onClick={() => setClicked(true)} layout className={`bg-black ${clicked ? "flex-[1]" : "flex-[0.5]"} `}>
-                            <motion.div layout>
-                                <p>HEY</p>
-                            </motion.div>
-                        </motion.div> */}
                 <motion.div onClick={() => setClicked(true)} layout className={`${clicked ? "flex-[0.6]" : "flex-[0.35]"} bg-accent2 rounded-lg p-9`}>
                     <motion.div layout="position">
                         <h2 className=" text-xl font-medium text-slate-900 mb-7">Create a Member</h2>

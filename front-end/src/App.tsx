@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router";
 import MyDao from "./components/members/MyMembers";
 import Members from "./pages/Members";
