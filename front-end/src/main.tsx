@@ -22,7 +22,7 @@ const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-const { chains, publicClient, webSocketPublicClient } = configureChains([hardhat, mainnet, goerli], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
+const { chains, publicClient, webSocketPublicClient } = configureChains([goerli, hardhat, mainnet], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
 
 // Set up wagmi config
 const config = createConfig({
