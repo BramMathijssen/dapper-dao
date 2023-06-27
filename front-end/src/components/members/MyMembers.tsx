@@ -196,20 +196,24 @@ const MyMembers = () => {
                             </motion.h2>
                             <Separator className="bg-customSlate-700 mb-6" />
 
-                            {memberData.map((member: any) => (
-                                <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
-                                    <motion.div layout="position">
-                                        <div className="">
-                                            <Jazzicon diameter={20} seed={jsNumberForAddress(member.address)} />
-                                        </div>
-                                        <div className="">
-                                            <motion.p className="text-xl font-bold text-customSlate-50">{hexToString(member.name)}</motion.p>
-                                            <motion.p className=" text-sm text-customSlate-200">{member.address}</motion.p>
-                                            <p>{formatTimestamp(member.memberSince)}</p>
-                                        </div>
+                            {memberData ? (
+                                memberData.map((member: any) => (
+                                    <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
+                                        <motion.div layout="position">
+                                            <div className="">
+                                                <Jazzicon diameter={20} seed={jsNumberForAddress(member.address)} />
+                                            </div>
+                                            <div className="">
+                                                <motion.p className="text-xl font-bold text-customSlate-50">{hexToString(member.name)}</motion.p>
+                                                <motion.p className=" text-sm text-customSlate-200">{member.address}</motion.p>
+                                                <p>{formatTimestamp(member.memberSince)}</p>
+                                            </div>
+                                        </motion.div>
                                     </motion.div>
-                                </motion.div>
-                            ))}
+                                ))
+                            ) : (
+                                <p>No members found</p>
+                            )}
                         </motion.div>
                     </div>
                 </motion.div>
