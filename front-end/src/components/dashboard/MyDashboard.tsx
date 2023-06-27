@@ -38,7 +38,7 @@ const MyDashboard = () => {
     });
 
     const filterProposals = (proposals: any, input: string) => {
-        const filtered = proposals.filter((proposal) => proposal.title.toLowerCase().includes(input.toLowerCase()));
+        const filtered = proposals.filter((proposal: any) => proposal.title.toLowerCase().includes(input.toLowerCase()));
 
         return filtered;
     };
@@ -91,7 +91,7 @@ const MyDashboard = () => {
                             <Activity className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">+{proposalData && proposalData.length}</div>
+                            <div className="text-2xl font-bold">+0</div>
                             <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                         </CardContent>
                     </Card>
@@ -168,7 +168,7 @@ const MyDashboard = () => {
                             <TabsContent value="account">
                                 <CardContent className="p-0">
                                     {proposalData
-                                        ? filterProposals(proposalData, searchValue).map((proposal) => (
+                                        ? filterProposals(proposalData, searchValue).map((proposal: any) => (
                                               <div className="w-full bg-customSlate-900 p-5 my-4 rounded-lg">
                                                   <div className="flex items-center gap-4">
                                                       <h3 className="text-lg font-medium">{proposal.title}</h3>
@@ -241,7 +241,7 @@ const MyDashboard = () => {
                             <TabsContent value="password">
                                 <CardContent className="p-0">
                                     {proposalData
-                                        ? filterProposals(proposalData, searchValue).map((proposal) => (
+                                        ? filterProposals(proposalData, searchValue).map((proposal: any) => (
                                               <div className="w-full bg-customSlate-900 p-5 my-4 rounded-lg">
                                                   <div className="flex items-center gap-4">
                                                       <h3 className="text-lg font-medium">{proposal.title}</h3>
