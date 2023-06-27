@@ -18,6 +18,7 @@ import { useToast } from "../ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import { DaoAbi } from "../../constants/DaoAbi";
 
 const MyDashboard = () => {
     const { chain } = useNetwork();
@@ -42,7 +43,7 @@ const MyDashboard = () => {
         return filtered;
     };
 
-    const searchFieldHandler = (e: any) => {
+    const searchFieldHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value);
     };
 

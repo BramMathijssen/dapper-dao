@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
     return (
+        
         <nav className="mx-auto max-w-7xl flex w-full  pt-6 mb-16" aria-label="Main">
             <ul className="flex flex-row w-full gap-12 items-center">
                 <li className="mr-auto">
