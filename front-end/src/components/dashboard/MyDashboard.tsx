@@ -25,6 +25,7 @@ const MyDashboard = () => {
     const [searchValue, setSearchValue] = useState("");
     const { toast } = useToast();
 
+    
     const { data: proposalData, refetch: retechProposals } = useContractRead({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
         abi: daoContractAbi,
@@ -34,9 +35,10 @@ const MyDashboard = () => {
             console.log("Success", data);
         },
     });
+    const typedProposalData = proposalData as any[];
 
     const filterProposals = (proposals: any, input: string) => {
-        const filtered = proposals.filter((proposal) => proposal.title.toLowerCase().includes(input.toLowerCase()));
+        const filtered = proposals.filter((proposal: any) => proposal.title.toLowerCase().includes(input.toLowerCase()));
 
         return filtered;
     };
@@ -89,7 +91,7 @@ const MyDashboard = () => {
                             <Activity className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">+{proposalData.length}</div>
+                            <div className="text-2xl font-bold">+{typedProposalData.length}</div>
                             <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                         </CardContent>
                     </Card>
@@ -161,7 +163,7 @@ const MyDashboard = () => {
                                 </CardHeader>
                                 <CardContent>
                                     {proposalData
-                                        ? filterProposals(proposalData, searchValue).map((proposal) => (
+                                        ? filterProposals(proposalData, searchValue).map((proposal: any) => (
                                               <div className="w-full">
                                                   <div className="flex items-center gap-4">
                                                       <h3 className="text-lg font-medium">{proposal.title}</h3>
@@ -266,7 +268,7 @@ const MyDashboard = () => {
                                 </CardHeader>
                                 <CardContent>
                                     {proposalData
-                                        ? filterProposals(proposalData, searchValue).map((proposal) => (
+                                        ? filterProposals(proposalData, searchValue).map((proposal: any) => (
                                               <div className="w-full">
                                                   <div className="flex items-center gap-4">
                                                       <h3 className="text-lg font-medium">{proposal.title}</h3>

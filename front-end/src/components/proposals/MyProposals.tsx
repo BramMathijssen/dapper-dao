@@ -172,7 +172,7 @@ const MyProposals = () => {
                             </motion.h2>
                             <Separator className="bg-customSlate-700 mb-6" />
 
-                            {proposalData.map((proposal) => (
+                            {proposalData.map((proposal: any) => (
                                 <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
                                     <div className="w-full">
                                         <div className="flex items-center gap-4">

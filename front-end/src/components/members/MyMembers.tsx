@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import { Address, useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
-import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAddressByChain";
-import { daoContractAbi } from "./../../constants";
+import { CONTRACTS, getContractAddressByChain } from "../../lib/getContractAddressByChain";
+import { daoContractAbi } from "../../constants";
 import { Button } from "../ui/button";
 import { hexToString, stringToHex } from "viem";
 import { motion } from "framer-motion";
@@ -10,14 +10,14 @@ import { Input } from "../ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./../ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { formatTimestamp } from "../../lib/formatTimestamp";
 
-const MyDao = () => {
+const MyMembers = () => {
     const { chain } = useNetwork();
     const [clicked, setClicked] = useState<boolean>(false);
 
@@ -196,7 +196,7 @@ const MyDao = () => {
                             </motion.h2>
                             <Separator className="bg-customSlate-700 mb-6" />
 
-                            {memberData.map((member) => (
+                            {memberData.map((member: any) => (
                                 <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
                                     <motion.div layout="position">
                                         <div className="">
@@ -218,4 +218,4 @@ const MyDao = () => {
     );
 };
 
-export default MyDao;
+export default MyMembers;

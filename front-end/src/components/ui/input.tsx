@@ -1,8 +1,8 @@
 import * as React from "react"
- import {motion} from "framer-motion"
+ import {HTMLMotionProps, motion} from "framer-motion"
 import { cn } from "../../lib/utils"
  
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = HTMLMotionProps<"input"> & {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
  
@@ -26,3 +26,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input"
  
 export { Input }
+

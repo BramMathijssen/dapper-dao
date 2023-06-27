@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App from "./App";
 import "./index.css";
 
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
@@ -12,7 +12,7 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import MyDao from "./components/dao/MyDao.js";
+import MyDao from "./components/members/MyMembers.js";
 import CreateProposal from "./components/dao/CreateProposal.js";
 import { BrowserRouter } from "react-router-dom";
 import { Toast } from "./components/ui/toast.js";
@@ -52,7 +52,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         >
             <BrowserRouter>
                 <App />
-                <Toaster/>
+                <Toaster />
             </BrowserRouter>
         </ConnectKitProvider>
     </WagmiConfig>

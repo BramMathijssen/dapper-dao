@@ -1,10 +1,10 @@
 import React from "react";
-import MyDao from "../components/dao/MyDao";
+import MyMembers from "../components/members/MyMembers";
 
 const Members = () => {
     return (
         <div>
-            <MyDao />
+            <MyMembers />
         </div>
     );
 };
