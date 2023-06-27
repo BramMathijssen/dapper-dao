@@ -1,25 +1,19 @@
-// tabs + seperate cards
-
-import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Activity, CreditCard, DollarSign, Users, ArrowUp, ArrowDown, CircleOff, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Activity,  Users, ArrowUp, ArrowDown, CircleOff, CheckCircle } from "lucide-react";
 import Layout from "../layout/Layout";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel,  SelectTrigger, SelectValue } from "../ui/select";
 import { Input } from "../ui/input";
-import { useContractRead, useContractReads, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
+import { useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAddressByChain";
 import { daoContractAbi } from "./../../constants";
-import { motion } from "framer-motion";
 import { Progress } from "../ui/progress";
 import { Badge } from "../ui/badge";
 import { formatTimestamp2 } from "../../lib/formatTimestamp";
 import { calculateRemainingTime } from "../../lib/calculateRemainingTime";
-import { Separator } from "../ui/separator";
 import { calculateUpvotePercentage } from "../../lib/calculateUpvotePercentage";
 import { useToast } from "../ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
 
 const MyDashboard = () => {
     const { chain } = useNetwork();
@@ -50,8 +44,6 @@ const MyDashboard = () => {
     const {
         write,
         data: voteData,
-        isError: isVoteError,
-        error: voteError,
     } = useContractWrite({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
         abi: daoContractAbi,
