@@ -151,13 +151,13 @@ const MyDashboard = () => {
                                 </div>
                                 <div>
                                 <TabsList className="grid w-[200px] grid-cols-2 ml-auto">
-                                    <TabsTrigger value="account">Active</TabsTrigger>
-                                    <TabsTrigger value="password">Ended</TabsTrigger>
+                                    <TabsTrigger value="active">Active</TabsTrigger>
+                                    <TabsTrigger value="ended">Ended</TabsTrigger>
                                 </TabsList>
                                 </div>
                                 {/* <SelectSeparator className="bg-customSlate-600" /> */}
                             </CardHeader>
-                            <TabsContent value="account">
+                            <TabsContent value="active">
                                 <CardContent className="p-0">
                                     {proposalData
                                         ? filterProposals(proposalData, searchValue).map((proposal: any) => (
@@ -230,7 +230,7 @@ const MyDashboard = () => {
                                         : null}
                                 </CardContent>
                             </TabsContent>
-                            <TabsContent value="password">
+                            <TabsContent value="ended">
                                 <CardContent className="p-0">
                                     {proposalData
                                         ? filterProposals(proposalData, searchValue).map((proposal: any) => (
