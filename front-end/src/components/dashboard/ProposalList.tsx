@@ -37,7 +37,7 @@ const ProposalList = ({ searchValue, active }: any) => {
         <div>
             {proposalData
                 ? filterProposals(proposalData, searchValue, active).map((proposal: any) => (
-                      <ProposalItem proposal={proposal} refetchProposals={refetchProposals} />
+                      <ProposalItem key={proposal.id} proposal={proposal} refetchProposals={refetchProposals} />
                   ))
                 : null}
         </div>

@@ -9,7 +9,7 @@ import { Input } from "../ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl,FormField, FormItem, FormLabel, FormMessage } from "./../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Loader2 } from "lucide-react";
@@ -24,10 +24,7 @@ const MyProposals = () => {
         return data;
     };
 
-    const {
-        data: proposalData,
-        refetch: refetchMembers,
-    } = useContractRead({
+    const { data: proposalData, refetch: refetchMembers } = useContractRead({
         address: getContractAddressByChain(chain?.id, CONTRACTS.DAO_CONTRACT),
         abi: daoContractAbi,
         functionName: "getAllProposals",
@@ -54,7 +51,7 @@ const MyProposals = () => {
         },
     });
 
-    const waitForTransaction = useWaitForTransaction({
+    const {isLoading: addMemberWaitLoading} = useWaitForTransaction({
         hash: addMemberData?.hash,
         onSuccess(data) {
             console.log(`successfully waited..`);
@@ -90,7 +87,11 @@ const MyProposals = () => {
     return (
         <Layout>
             <div className="flex flex-row gap-2 h-full">
-                <motion.div onClick={() => setClicked(true)} layout className={`${clicked ? "flex-[0.6]" : "flex-[0.35]"} bg-accent2 rounded-lg p-9`}>
+                <motion.div
+                    onClick={() => setClicked(true)}
+                    layout
+                    className={`${clicked ? "flex-[0.6]" : "flex-[0.35]"} bg-accent2 rounded-lg p-9`}
+                >
                     <motion.div layout="position">
                         <h2 className=" text-xl font-medium text-slate-900 mb-7">Create a Proposal</h2>
                         <Form {...form}>
@@ -115,7 +116,11 @@ const MyProposals = () => {
                                         <FormItem>
                                             <FormLabel className="text-black">Description</FormLabel>
                                             <FormControl>
-                                                <Textarea className="border-black text-black" placeholder="" {...field} />
+                                                <Textarea
+                                                    className="border-black text-black"
+                                                    placeholder=""
+                                                    {...field}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -145,7 +150,7 @@ const MyProposals = () => {
                                         </FormItem>
                                     )}
                                 />
-                                {addMemberLoading ? (
+                                {addMemberLoading || addMemberWaitLoading ? (
                                     <Button disabled>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         Please wait
@@ -159,7 +164,11 @@ const MyProposals = () => {
                         </Form>
                     </motion.div>
                 </motion.div>
-                <motion.div onClick={() => setClicked(false)} layout className={`rounded-lg flex-1 bg-[url('./assets/images/grain.jpg')] bg-cover`}>
+                <motion.div
+                    onClick={() => setClicked(false)}
+                    layout
+                    className={`rounded-lg flex-1 bg-[url('./assets/images/grain.jpg')] bg-cover`}
+                >
                     <div className="w-full h-full bg-myPrimary-200/90 rounded-lg p-9">
                         <motion.div>
                             <motion.h2 layout="position" className=" text-xl font-medium text-slate-50 mb-5">
@@ -169,7 +178,10 @@ const MyProposals = () => {
 
                             {proposalData ? (
                                 proposalData.map((proposal: any) => (
-                                    <motion.div layout className="w-full rounded-lg border border-customSlate-300 mb-3 p-5">
+                                    <motion.div
+                                        layout
+                                        className="w-full rounded-lg border border-customSlate-300 mb-3 p-5"
+                                    >
                                         <div className="w-full">
                                             <div className="flex items-center gap-4">
                                                 <h3 className="text-lg font-medium">{proposal.title}</h3>
