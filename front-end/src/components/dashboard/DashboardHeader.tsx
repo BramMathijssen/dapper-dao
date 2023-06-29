@@ -34,7 +34,7 @@ const DashboardHeader = ({ proposals, members }: any) => {
                     <Activity className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">+{checkProposalActive(proposals)[0].length}</div>
+                    <div className="text-2xl font-bold">+{proposals && checkProposalActive(proposals)[0].length}</div>
                     <p className="text-xs text-muted-foreground">+5.1% from last month</p>
                 </CardContent>
             </Card>
@@ -44,7 +44,7 @@ const DashboardHeader = ({ proposals, members }: any) => {
                     <CheckCircle className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">+{checkEndedProposals(proposals)[0].length}</div>
+                    <div className="text-2xl font-bold">+{proposals &&  checkEndedProposals(proposals)[0].length}</div>
                     <p className="text-xs text-muted-foreground">+23.1% from last month</p>
                 </CardContent>
             </Card>
@@ -54,7 +54,7 @@ const DashboardHeader = ({ proposals, members }: any) => {
                     <CircleOff className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">+{checkEndedProposals(proposals)[1].length}</div>
+                    <div className="text-2xl font-bold">+{proposals &&  checkEndedProposals(proposals)[1].length}</div>
                     <p className="text-xs text-muted-foreground">+13% from last month</p>
                 </CardContent>
             </Card>
@@ -64,7 +64,7 @@ const DashboardHeader = ({ proposals, members }: any) => {
                     <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">+{members.length}</div>
+                    <div className="text-2xl font-bold">+{members && members.length}</div>
                     <p className="text-xs text-muted-foreground">+1 since last hour</p>
                 </CardContent>
             </Card>
