@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
-import { goerli, hardhat, polygonMumbai } from "@wagmi/core/chains";
+import { goerli, hardhat } from "@wagmi/core/chains";
 import { ConnectKitProvider } from "connectkit";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -12,10 +11,7 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import MyDao from "./components/members/MyMembers.js";
-import CreateProposal from "./components/dao/CreateProposal.js";
 import { BrowserRouter } from "react-router-dom";
-import { Toast } from "./components/ui/toast.js";
 import { Toaster } from "./components/ui/toaster.js";
 
 const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
