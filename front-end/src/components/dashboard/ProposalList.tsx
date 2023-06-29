@@ -19,13 +19,11 @@ const ProposalList = ({ searchValue, active, proposalData, refetchProposals }: a
 
     return (
         <div>
-            {proposalData && proposalData.length > 0 ? (
-                filterProposals(proposalData, searchValue, active).map((proposal: any) => (
-                    <ProposalItem key={proposal} proposal={proposal} refetchProposals={refetchProposals} />
-                ))
-            ) : (
-                <p>No Proposals Found</p>
-            )}
+            {proposalData
+                ? filterProposals(proposalData, searchValue, active).map((proposal: any) => (
+                      <ProposalItem key={proposal} proposal={proposal} refetchProposals={refetchProposals} />
+                  ))
+                : null}
         </div>
     );
 };
