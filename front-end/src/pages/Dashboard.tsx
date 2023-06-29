@@ -5,9 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import Filters from "../components/dashboard/Filters";
 import ProposalList from "../components/dashboard/ProposalList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import useFetchMembers from "../hooks/useFetchMembers";
+import useFetchProposals from "../hooks/useFetchProposals";
 
 const Dashboard = () => {
     const [searchValue, setSearchValue] = useState("");
+    const [memberData, refetchMembers] = useFetchMembers();
+    const [proposalData, refetchProposals] = useFetchProposals();
 
     const searchFieldHandler = (e: any) => {
         setSearchValue(e.target.value);
@@ -17,7 +21,7 @@ const Dashboard = () => {
         <>
             <Layout>
                 <div className="flex flex-col h-full gap-y-16">
-                    <DashboardHeader />
+                    <DashboardHeader members={memberData} proposals={proposalData} />
                     <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-10 grow">
                         <Card className="col-span-2 border-none">
                             <CardHeader className="p-0">
@@ -44,10 +48,10 @@ const Dashboard = () => {
                                     </div>
                                 </CardHeader>
                                 <TabsContent value="active">
-                                    <ProposalList searchValue={searchValue} active={true} />
+                                    <ProposalList proposalData={proposalData} refetchProposals={refetchProposals} searchValue={searchValue} active={true} />
                                 </TabsContent>
                                 <TabsContent value="ended">
-                                    <ProposalList searchValue={searchValue} active={false} />
+                                    <ProposalList proposalData={proposalData} refetchProposals={refetchProposals} searchValue={searchValue} active={false} />
                                 </TabsContent>
                             </Tabs>
                         </Card>

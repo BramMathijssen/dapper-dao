@@ -11,11 +11,11 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Loader2 } from "lucide-react";
-import useFetchMembers from "../../hooks/useFetchMembers";
+import { useToast } from "../ui/use-toast";
 
-const AddMemberForm = ({refetchMembers} : any) => {
+const AddMemberForm = ({ refetchMembers }: any) => {
+    const { toast } = useToast();
     const { chain } = useNetwork();
-    // const [memberData, refetchMembers] = useFetchMembers();
 
     const {
         write,
@@ -29,14 +29,26 @@ const AddMemberForm = ({refetchMembers} : any) => {
             console.log(`succesfully written...`);
             console.log(data);
         },
+        onError(error) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+            });
+        },
     });
 
-    const waitForTransaction = useWaitForTransaction({
+    const {isLoading: waitAddMemberLoading} = useWaitForTransaction({
         hash: addMemberData?.hash,
         onSuccess(data) {
             console.log(`successfully waited..`);
             console.log(data);
             refetchMembers();
+            toast({
+                variant: "custom",
+                title: "Success",
+                description: "Successfully Added a new Member",
+            });
         },
     });
 
@@ -117,7 +129,7 @@ const AddMemberForm = ({refetchMembers} : any) => {
                             </FormItem>
                         )}
                     />
-                    {addMemberLoading ? (
+                    {addMemberLoading || waitAddMemberLoading ? (
                         <Button disabled>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             Please wait

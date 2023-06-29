@@ -1,12 +1,10 @@
-import useFetchProposals from "@/src/hooks/useFetchProposals";
-import { motion } from "framer-motion";
 import ProposalItem from "./ProposalItem";
 
 const ProposalList = ({ proposalData }: any) => {
     return (
         <>
             {proposalData.length > 0 ? (
-                proposalData.map((proposal: any) => <ProposalItem proposal={proposal} />)
+                proposalData.map((proposal: any) => <ProposalItem key={proposal.id} proposal={proposal} />)
             ) : (
                 <p>No proposals found</p>
             )}

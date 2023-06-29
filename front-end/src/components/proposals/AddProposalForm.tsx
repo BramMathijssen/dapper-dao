@@ -12,9 +12,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Loader2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
 const AddProposalForm = ({refetchProposals} : any) => {
     const { chain } = useNetwork();
+    const {toast} = useToast();
 
     const {
         write,
@@ -28,6 +30,13 @@ const AddProposalForm = ({refetchProposals} : any) => {
             console.log(`succesfully written...`);
             console.log(data);
         },
+        onError(error) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+            });
+        },
     });
 
     const {isLoading: addMemberWaitLoading} = useWaitForTransaction({
@@ -36,6 +45,11 @@ const AddProposalForm = ({refetchProposals} : any) => {
             console.log(`successfully waited..`);
             console.log(data);
             refetchProposals();
+            toast({
+                variant: "custom",
+                title: "Success",
+                description: "Successfully Added a new Proposal",
+            });
         },
     });
 

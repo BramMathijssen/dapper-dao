@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Loader2 } from "lucide-react";
 import { useContractWrite, useNetwork, useWaitForTransaction } from "wagmi";
 import { CONTRACTS, getContractAddressByChain } from "./../../lib/getContractAddressByChain";
 import { daoContractAbi } from "./../../constants";
@@ -33,13 +33,17 @@ const ProposalItem = ({ proposal, refetchProposals }: any) => {
         },
     });
 
-    const waitForTransaction = useWaitForTransaction({
+    const { isLoading } = useWaitForTransaction({
         hash: voteData?.hash,
-
         onSuccess(data) {
             console.log(`successfully waited..`);
             console.log(data);
             refetchProposals();
+            toast({
+                variant: "custom",
+                title: "Success",
+                description: "Successfully voted for Proposal",
+            });
         },
     });
 
@@ -73,6 +77,7 @@ const ProposalItem = ({ proposal, refetchProposals }: any) => {
                     <div className="flex mt-3 justify-between">
                         <div className="flex gap-4 items-center">
                             <div className="flex items-center text-sm">
+                                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                                 <ArrowUp
                                     aria-label="upvote"
                                     onClick={() => {
