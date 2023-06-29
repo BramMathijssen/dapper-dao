@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
-import { goerli, hardhat } from "@wagmi/core/chains";
+import { sepolia, hardhat } from "@wagmi/core/chains";
 import { ConnectKitProvider } from "connectkit";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -18,7 +18,7 @@ const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY;
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-const { chains, publicClient, webSocketPublicClient } = configureChains([goerli, hardhat, mainnet], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
+const { chains, publicClient, webSocketPublicClient } = configureChains([sepolia, hardhat, mainnet], [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]);
 
 // Set up wagmi config
 const config = createConfig({
