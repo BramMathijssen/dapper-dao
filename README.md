@@ -1,5 +1,6 @@
 # dapper-dao
-https://github.com/BramMathijssen/dapper-dao/assets/15011053/bb5c84cc-ce97-453a-9b23-e8928061b749
+https://github.com/BramMathijssen/dapper-dao/assets/15011053/ad2af83f-03a1-42ef-97e9-ba2c05dccf1c
+
 
 ## Description
 A dApp to run a decentralized autonomous organization (DAO), registered admins can add other members to the DAO. Only members are allowed to vote on proposals.
