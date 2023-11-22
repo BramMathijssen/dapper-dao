@@ -1,4 +1,6 @@
+import { uuid } from "uuidv4";
 import ProposalItem from "./ProposalItem";
+
 
 const ProposalList = ({ searchValue, active, proposalData, refetchProposals }: any) => {
     const filterProposals = (proposals: any, input: string, active: boolean) => {
@@ -21,7 +23,7 @@ const ProposalList = ({ searchValue, active, proposalData, refetchProposals }: a
         <div>
             {proposalData && proposalData.length > 0 ? (
                 filterProposals(proposalData, searchValue, active).map((proposal: any) => (
-                    <ProposalItem key={proposal} proposal={proposal} refetchProposals={refetchProposals} />
+                    <ProposalItem key={Math.floor(Math.random() * 1000)} proposal={proposal} refetchProposals={refetchProposals} />
                 ))
             ) : (
                 <p>No Proposals Found</p>

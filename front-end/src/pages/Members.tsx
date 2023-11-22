@@ -20,7 +20,7 @@ const Members = () => {
                     className={`${clicked ? "flex-[0.6]" : "flex-[0.35]"} bg-accent2 rounded-lg p-9`}
                 >
                     <motion.div layout="position">
-                        <h2 className=" text-xl font-medium text-slate-900 mb-7">Create a Member</h2>
+                        <h2 className=" text-xl font-medium text-slate-900 mb-7">Add a Member</h2>
                         <AddMemberForm refetchMembers={refetchMembers} />
                     </motion.div>
                 </motion.div>

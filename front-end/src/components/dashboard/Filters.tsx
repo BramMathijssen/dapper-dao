@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel,  SelectTrigger, SelectValue } from "../ui/select";
 import { CardContent } from "../ui/card";
 import { Input } from "../ui/input";
 
-const Filters = ({ handleFilterChange} : any) => {
 
+const Filters = ({ handleFilterChange} : any) => {
     return (
         <CardContent className="p-0 mt-5">
             <h3 className="text-sm text-medium mb-3 mt-5">Search Proposal</h3>

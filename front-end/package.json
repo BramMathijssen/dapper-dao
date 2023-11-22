@@ -34,6 +34,7 @@
     "react-router-dom": "^6.11.1",
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6",
+    "uuidv4": "^6.2.13",
     "viem": "^0.3.50",
     "wagmi": "^1.2.0",
     "zod": "^3.21.4"
